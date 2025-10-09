@@ -2,6 +2,9 @@
 
 > ⚠️ **Unofficial package.** This project is a community-maintained Vue 3 port
 > of OpenAI’s ChatKit bindings and is not published or supported by OpenAI.
+> Please be aware that the API surface is still evolving; breaking changes may
+> occur with little advance notice. Evaluate your tolerance for change before
+> relying on this library in production.
 
 Vue 3 bindings and headless components for building ChatKit experiences with
 Tailwind-first styling. This package mirrors the ergonomics of
