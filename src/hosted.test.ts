@@ -13,13 +13,20 @@ describe('createHostedClientSecret', () => {
     fetchMock.mockReset();
   });
 
-  it('fetches a client secret and caches it', async () => {
-    fetchMock.mockResolvedValueOnce(
-      new Response(JSON.stringify({ client_secret: 'first-secret' }), {
-        status: 200,
-        headers: { 'content-type': 'application/json' }
-      })
-    );
+  it('fetches a client secret, caches it, and refreshes it on demand', async () => {
+    fetchMock
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ client_secret: 'first-secret' }), {
+          status: 200,
+          headers: { 'content-type': 'application/json' }
+        })
+      )
+      .mockResolvedValueOnce(
+        new Response(JSON.stringify({ client_secret: 'second-secret' }), {
+          status: 200,
+          headers: { 'content-type': 'application/json' }
+        })
+      );
 
     const hosted = createHostedClientSecret({
       url: '/api/secret',
@@ -27,9 +34,16 @@ describe('createHostedClientSecret', () => {
     });
 
     await expect(hosted.getClientSecret(null)).resolves.toBe('first-secret');
-    await expect(hosted.getClientSecret('first-secret')).resolves.toBe('first-secret');
-
     expect(fetchMock).toHaveBeenCalledTimes(1);
+
+    await expect(hosted.getClientSecret(null)).resolves.toBe('first-secret');
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+
+    await expect(hosted.getClientSecret('first-secret')).resolves.toBe('second-secret');
+    expect(fetchMock).toHaveBeenCalledTimes(2);
+
+    await expect(hosted.getClientSecret(null)).resolves.toBe('second-secret');
+    expect(fetchMock).toHaveBeenCalledTimes(2);
   });
 
   it('supports custom payload factories', async () => {
@@ -72,7 +86,7 @@ describe('createHostedClientSecret', () => {
     });
 
     await expect(hosted.getClientSecret(null)).rejects.toThrow(
-      'Client secret response did not include a client_secret field.'
+      'Client secret response did not include a valid secret field (expected client_secret, clientSecret, or secret).'
     );
   });
 });

@@ -156,7 +156,7 @@ const { control } = useChatKit({
 ```
 
 Your backend endpoint should mint and return JSON with a `client_secret`
-property (matching the ChatKit documentation). `createHostedClientSecret`
+property (the helper also recognizes `clientSecret` and `secret`). `createHostedClientSecret`
 caches the last secret that was issued, retries transparently when the widget
 asks for a refresh, and lets you override the HTTP method, headers, body, or
 response parser if your integration needs a custom shape.

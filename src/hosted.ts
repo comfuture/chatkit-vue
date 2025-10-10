@@ -64,7 +64,9 @@ async function defaultParse(response: Response): Promise<string> {
         (payload as Record<string, unknown>).secret
       : undefined;
   if (typeof secret !== 'string' || !secret) {
-    throw new Error('Client secret response did not include a client_secret field.');
+    throw new Error(
+      'Client secret response did not include a valid secret field (expected client_secret, clientSecret, or secret).'
+    );
   }
   return secret;
 }
@@ -135,10 +137,9 @@ export function createHostedClientSecret(
 
   return {
     async getClientSecret(currentClientSecret: string | null): Promise<string> {
-      if (currentClientSecret && cachedSecret && currentClientSecret === cachedSecret) {
-        return currentClientSecret;
-      }
-      if (!currentClientSecret && cachedSecret) {
+      const mustRefresh = currentClientSecret !== null && currentClientSecret === cachedSecret;
+
+      if (cachedSecret && !mustRefresh) {
         return cachedSecret;
       }
 
