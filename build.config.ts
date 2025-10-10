@@ -1,7 +1,12 @@
 import { defineBuildConfig } from 'unbuild';
 
 export default defineBuildConfig({
-  entries: ['./nuxt/index'],
+  entries: [
+    {
+      input: './nuxt/index',
+      name: 'index'
+    }
+  ],
   outDir: 'dist/nuxt',
   declaration: true,
   clean: false,
