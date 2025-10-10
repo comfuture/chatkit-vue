@@ -9,7 +9,8 @@
   "module": "dist/chatkit-vue.es.js",
   "types": "dist/types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "nuxt"
   ],
   "exports": {
     ".": {
@@ -17,7 +18,10 @@
       "import": "./dist/chatkit-vue.es.js",
       "require": "./dist/chatkit-vue.umd.cjs"
     },
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./dist/styles.css",
+    "./nuxt": {
+      "import": "./nuxt/index.ts"
+    }
   },
   "scripts": {
     "dev": "vite",
@@ -28,7 +32,13 @@
   },
   "peerDependencies": {
     "@openai/chatkit": "^1.0.0",
-    "vue": "^3.4.0"
+    "vue": "^3.4.0",
+    "nuxt": "^3.0.0 || ^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "nuxt": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@headlessui/vue": "^1.7.20",
