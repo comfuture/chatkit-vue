@@ -1,4 +1,4 @@
-import { addComponentsDir, addImportsDir, createResolver, defineNuxtModule } from 'nuxt/kit';
+import { addComponent, addImports, defineNuxtModule } from 'nuxt/kit';
 
 export interface ModuleOptions {
   /**
@@ -15,6 +15,18 @@ export interface ModuleOptions {
   styles: boolean;
 }
 
+const COMPONENTS = [
+  'ChatKitRoot',
+  'ChatKit',
+  'ChatHistory',
+  'ChatMessageList',
+  'ChatMessageBubble',
+  'ChatComposer',
+  'WidgetRenderer'
+] as const;
+
+const COMPOSABLES = ['useChatKit', 'useStableOptions'] as const;
+
 export default defineNuxtModule<ModuleOptions>({
   meta: {
     name: 'chatkit-vue-module',
@@ -29,21 +41,27 @@ export default defineNuxtModule<ModuleOptions>({
     styles: true
   },
   setup(options, nuxt) {
-    const resolver = createResolver(import.meta.url);
-
     if (options.composables) {
-      addImportsDir(resolver.resolve('../src/composables'));
+      addImports(
+        COMPOSABLES.map((name) => ({
+          name,
+          from: 'chatkit-vue'
+        }))
+      );
     }
 
     if (options.components) {
-      addComponentsDir({
-        path: resolver.resolve('../src/components'),
-        pathPrefix: false
+      COMPONENTS.forEach((name) => {
+        addComponent({
+          name,
+          export: name,
+          filePath: 'chatkit-vue'
+        });
       });
     }
 
     if (options.styles) {
-      const stylePath = resolver.resolve('../src/styles/tailwind.css');
+      const stylePath = 'chatkit-vue/styles.css';
       if (!nuxt.options.css.includes(stylePath)) {
         nuxt.options.css.push(stylePath);
       }

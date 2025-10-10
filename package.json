@@ -20,15 +20,17 @@
     },
     "./styles.css": "./dist/styles.css",
     "./nuxt": {
-      "import": "./nuxt/index.ts"
+      "types": "./dist/nuxt/index.d.ts",
+      "import": "./dist/nuxt/index.mjs"
     }
   },
   "scripts": {
     "dev": "vite",
-    "build": "rimraf dist && vue-tsc --declaration --emitDeclarationOnly --declarationDir dist/types && vite build && npm run build:styles",
+    "build": "rimraf dist && vue-tsc --declaration --emitDeclarationOnly --declarationDir dist/types && vite build && npm run build:styles && npm run build:nuxt",
     "build:styles": "tailwindcss -i ./src/styles/tailwind.css -o ./dist/styles.css --minify",
     "typecheck": "vue-tsc --noEmit",
-    "test": "vitest"
+    "test": "vitest",
+    "build:nuxt": "unbuild"
   },
   "peerDependencies": {
     "@openai/chatkit": "^1.0.0",
@@ -54,6 +56,7 @@
     "rimraf": "^5.0.5",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.4.5",
+    "unbuild": "^2.0.0",
     "vite": "^5.2.9",
     "vitest": "^1.6.0",
     "vue": "^3.4.21",
