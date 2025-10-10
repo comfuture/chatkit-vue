@@ -8,3 +8,4 @@ export { default as ChatComposer } from './components/ChatComposer.vue';
 export { default as WidgetRenderer } from './components/WidgetRenderer.vue';
 export { useChatKit } from './composables/useChatKit';
 export { useStableOptions } from './composables/useStableOptions';
+export { createHostedClientSecret } from './hosted';

@@ -130,6 +130,37 @@ module.exports = {
 };
 ```
 
+## Handling hosted client secrets
+
+When you integrate with the hosted ChatKit API (`getClientSecret`) the frontend
+must request a short-lived `client_secret` from your backend before the widget
+can talk to OpenAI. `chatkit-vue` exposes a helper that wires this up for you
+with caching, refresh, and optional request customization:
+
+```ts
+import { createHostedClientSecret, useChatKit } from 'chatkit-vue';
+
+const hosted = createHostedClientSecret({
+  url: '/api/chatkit/client-secret',
+  headers: () => ({
+    Authorization: `Bearer ${window.sessionToken}`,
+  }),
+  body: () => ({
+    user_id: window.currentUserId,
+  }),
+});
+
+const { control } = useChatKit({
+  api: hosted,
+});
+```
+
+Your backend endpoint should mint and return JSON with a `client_secret`
+property (the helper also recognizes `clientSecret` and `secret`). `createHostedClientSecret`
+caches the last secret that was issued, retries transparently when the widget
+asks for a refresh, and lets you override the HTTP method, headers, body, or
+response parser if your integration needs a custom shape.
+
 ## Building & testing locally
 
 ```bash
