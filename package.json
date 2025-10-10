@@ -27,6 +27,7 @@
   "scripts": {
     "dev": "vite",
     "build": "rimraf dist && vue-tsc --declaration --emitDeclarationOnly --declarationDir dist/types && vite build && npm run build:styles && npm run build:nuxt",
+    "build:types": "vue-tsc --project tsconfig.build.json",
     "build:styles": "tailwindcss -i ./src/styles/tailwind.css -o ./dist/styles.css --minify",
     "typecheck": "vue-tsc --noEmit",
     "test": "vitest",
