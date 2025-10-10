@@ -6,6 +6,6 @@
     "declarationDir": "./dist/types",
     "rootDir": "./src"
   },
-  "include": ["src/**/*", "src/**/*.vue"],
+  "include": ["src/**/*"],
   "exclude": ["**/*.spec.ts", "**/*.test.ts"]
 }
