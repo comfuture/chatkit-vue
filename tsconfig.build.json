@@ -7,5 +7,5 @@
     "rootDir": "./src"
   },
   "include": ["src/**/*"],
-  "exclude": ["**/*.spec.ts", "**/*.test.ts"]
+  "exclude": ["**/*.spec.ts", "**/*.test.ts", "src/nuxt/**/*"]
 }
