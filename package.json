@@ -1,6 +1,6 @@
 {
   "name": "chatkit-vue",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "type": "module",
   "description": "Unofficial Vue 3 bindings for OpenAI ChatKit with Tailwind-styled UI components.",
   "author": "",
