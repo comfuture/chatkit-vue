@@ -23,6 +23,10 @@ jobs:
         with:
           node-version: "20"
           registry-url: https://registry.npmjs.org
+          always-auth: true
+
+      - name: Update npm (trusted publishing needs npm >= 11.5.1)
+        run: npm install -g npm@latest
 
       - name: Install pnpm
         run: npm install -g pnpm@9
@@ -37,4 +41,4 @@ jobs:
         run: pnpm run build
 
       - name: Publish package
-        run: pnpm publish --access public --no-git-checks
+        run: npm publish --access public --provenance
