@@ -41,45 +41,30 @@ If you already run Tailwind, you can alternatively import
 
 ## Quick start
 
+Make sure the ChatKit platform script is present in your document (for Vite
+apps this typically lives in `index.html`):
+
+```html
+<script src="https://cdn.platform.openai.com/deployments/chatkit/chatkit.js"></script>
+```
+
+Then wire up the hosted client secret helper and mount the component:
+
 ```vue
 <script setup lang="ts">
-import { ChatKitRoot, useChatKit } from 'chatkit-vue';
+import { useChatKit, createHostedClientSecret } from 'chatkit-vue';
 
-const {
-  control,
-  sendUserMessage,
-  ref: chatKitRef,
-} = useChatKit({
-  api: {
-    url: '/api/chatkit',
-    domainKey: 'my-domain-key',
-  },
-  theme: 'light',
-  header: { enabled: true },
+const { control } = useChatKit({
+  api: createHostedClientSecret({
+    domainKey: 'domain_pk_XXXXXX',
+    url: '/api/session',
+    method: 'POST',
+  }),
 });
-
-const threads = ref([]);
-const messages = ref([]);
-const composer = ref('');
-
-async function handleSubmit() {
-  await sendUserMessage({ text: composer.value });
-  composer.value = '';
-}
 </script>
 
 <template>
-  <div class="h-screen bg-muted/20 p-6">
-    <ChatKitRoot
-      :threads="threads"
-      :messages="messages"
-      :composer-value="composer"
-      @update:composerValue="composer = $event"
-      @submit="handleSubmit"
-    />
-    <!-- Mount the native web component (optional if you render your own UI) -->
-    <ChatKit :control="control" class="hidden" ref="chatKitRef" />
-  </div>
+  <ChatKit :control="control" />
 </template>
 ```
 
