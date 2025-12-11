@@ -9,8 +9,7 @@
   "module": "dist/chatkit-vue.es.js",
   "types": "dist/types/index.d.ts",
   "files": [
-    "dist",
-    "nuxt"
+    "dist"
   ],
   "exports": {
     ".": {
@@ -26,7 +25,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "rimraf dist && vue-tsc --declaration --emitDeclarationOnly --declarationDir dist/types && vite build && npm run build:styles && npm run build:nuxt",
+    "build": "rimraf dist && vite build && npm run build:styles && npm run build:nuxt && npm run build:types",
     "build:types": "vue-tsc --project tsconfig.build.json",
     "build:styles": "tailwindcss -i ./src/styles/tailwind.css -o ./dist/styles.css --minify",
     "typecheck": "vue-tsc --noEmit",
