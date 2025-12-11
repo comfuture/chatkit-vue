@@ -10,6 +10,11 @@ export interface HostedClientSecretOptions {
    */
   url: string;
   /**
+   * Optional domain key to keep alongside the hosted configuration.
+   * Not sent automatically; useful for apps that need to store or forward it.
+   */
+  domainKey?: string;
+  /**
    * Optional fetch implementation. Defaults to the global `fetch`.
    */
   fetch?: typeof fetch;
