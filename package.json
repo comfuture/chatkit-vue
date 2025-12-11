@@ -8,6 +8,10 @@
   "main": "dist/chatkit-vue.umd.cjs",
   "module": "dist/chatkit-vue.es.js",
   "types": "dist/types/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/comfuture/chatkit-vue.git"
+  },
   "files": [
     "dist"
   ],
