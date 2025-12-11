@@ -22,6 +22,8 @@ const definitionCleanup: Array<() => void> = [];
 let pendingOptions: ChatKitOptions | null = null;
 
 const EVENTS: Record<keyof ChatKitEvents, keyof ChatKitControl['handlers']> = {
+  'chatkit.ready': 'onReady',
+  'chatkit.effect': 'onEffect',
   'chatkit.error': 'onError',
   'chatkit.response.start': 'onResponseStart',
   'chatkit.response.end': 'onResponseEnd',
